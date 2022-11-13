@@ -128,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final response = await http.post(
-          Uri.parse("https://api.sobatcoding.com/testing/login"),
+          // Uri.parse("https://api.sobatcoding.com/testing/login"),
+          Uri.parse("http://192.168.43.28:3000/login"),
           headers: {'Content-Type': 'application/json; charset=UTF-8'},
           body: jsonEncode({
             "email": email,
@@ -202,6 +203,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    ceckLogin();
     super.initState();
   }
 
@@ -268,15 +270,15 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         elevation: 10,
                         minimumSize: const Size(200, 58)),
-                    // onPressed: () => _validateInputs(),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
-                      );
-                    },
+                    onPressed: () => _validateInputs(),
+                    // onPressed: () {
+                    //   Navigator.pushReplacement(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const HomePage(),
+                    //     ),
+                    //   );
+                    // },
                     icon: const Icon(Icons.arrow_right_alt),
                     label: const Text(
                       "MASUK",
