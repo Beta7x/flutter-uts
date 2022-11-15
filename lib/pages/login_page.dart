@@ -122,47 +122,73 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Container(
+        decoration: const BoxDecoration(
+          color: Colors.red,
+        ),
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(
+      content: Container(
+        decoration: const BoxDecoration(
+          color: Colors.green,
+        ),
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   doLogin(email, password) async {
     final GlobalKey<State> keyLoader = GlobalKey<State>();
     Dialogs.loading(context, keyLoader, 'Proses...');
 
     try {
-      final response = await http.post(
-          // Uri.parse("https://api.sobatcoding.com/testing/login"),
-          Uri.parse("http://192.168.43.28:3000/login"),
-          headers: {'Content-Type': 'application/json; charset=UTF-8'},
-          body: jsonEncode({
-            "email": email,
-            "password": password,
-          }));
+      final response =
+          await http.post(Uri.parse("http://192.168.43.28:3000/login"),
+              headers: {'Content-Type': 'application/json; charset=UTF-8'},
+              body: jsonEncode({
+                "email": email,
+                "password": password,
+              }));
 
       final output = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Navigator.of(keyLoader.currentContext!, rootNavigator: false).pop();
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-            output['message'],
-            style: const TextStyle(fontSize: 16),
-          )),
-        );
-
+        showSuccessMessage(output['message']);
         if (output['success'] == true) {
-          saveSession(email);
+          saveSession(output['key']);
         }
-        //debugPrint(output['message']);
       } else {
         Navigator.of(keyLoader.currentContext!, rootNavigator: false).pop();
-        //debugPrint(output['message']);
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-            output.toString(),
-            style: const TextStyle(fontSize: 16),
-          )),
-        );
+        showErrorMessage(output['message']);
       }
     } catch (e) {
       Navigator.of(keyLoader.currentContext!, rootNavigator: false).pop();
@@ -171,9 +197,9 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  saveSession(String email) async {
+  saveSession(String key) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("email", email);
+    await pref.setString("key", key);
     await pref.setBool("is_login", true);
 
     // ignore: use_build_context_synchronously
@@ -186,24 +212,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void ceckLogin() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    var islogin = pref.getBool("is_login");
-    if (islogin != null && islogin) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const HomePage(),
-        ),
-        (route) => false,
-      );
-    }
-  }
-
   @override
   void initState() {
-    ceckLogin();
     super.initState();
   }
 
@@ -271,14 +281,6 @@ class _LoginPageState extends State<LoginPage> {
                         elevation: 10,
                         minimumSize: const Size(200, 58)),
                     onPressed: () => _validateInputs(),
-                    // onPressed: () {
-                    //   Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => const HomePage(),
-                    //     ),
-                    //   );
-                    // },
                     icon: const Icon(Icons.arrow_right_alt),
                     label: const Text(
                       "MASUK",
