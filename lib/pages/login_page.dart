@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final response =
-          await http.post(Uri.parse("http://192.168.43.28:3000/login"),
+          await http.post(Uri.parse("https://lrg2ak.deta.dev/login"),
               headers: {'Content-Type': 'application/json; charset=UTF-8'},
               body: jsonEncode({
                 "email": email,

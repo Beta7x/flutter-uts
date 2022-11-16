@@ -28,7 +28,7 @@ class _VisitorPageState extends State<VisitorList> {
 
   Future<void> fetchAllVisitor() async {
     // GET data visitor from server
-    const url = 'http://192.168.43.28:3000/visitors';
+    const url = 'https://lrg2ak.deta.dev/visitors';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

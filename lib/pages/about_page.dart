@@ -16,7 +16,7 @@ class _AboutPageState extends State<AboutPage> {
   Future<List<String>> getSessionProfile() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var key = pref.getString('key');
-    var uri = "http://192.168.43.28:3000/users/$key";
+    var uri = "https://lrg2ak.deta.dev/users/$key";
     var userDetail = await http.get(Uri.parse(uri), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
