@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final screens = [
     const MorePage(),
     const AddPage(),
-    const AboutPage(),
+    const AbaoutPage(),
   ];
 
   getPref() async {

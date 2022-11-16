@@ -1,78 +1,45 @@
-import 'dart:convert';
-
-import 'package:fluter_article_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
-class AboutPage extends StatefulWidget {
-  const AboutPage({super.key});
-
-  @override
-  State<AboutPage> createState() => _AboutPageState();
-}
-
-class _AboutPageState extends State<AboutPage> {
-  Future<List<String>> getSessionProfile() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    var key = pref.getString('key');
-    var uri = "https://lrg2ak.deta.dev/users/$key";
-    var userDetail = await http.get(Uri.parse(uri), headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    });
-    var profile = json.decode(userDetail.body) as Map;
-    List<String> list = [
-      profile['imageUrl'],
-      profile["name"],
-      profile['email'],
-      profile["address"],
-      profile['about'],
-    ];
-    return list;
-  }
-
-  void loginPageRoute() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => const LoginPage(),
-      ),
-      (route) => false,
-    );
-  }
-
-  logOut() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      preferences.remove("is_login");
-      preferences.remove('key');
-    });
-    loginPageRoute();
-    showSuccessMessage("Logout");
-  }
-
-  void showSuccessMessage(String message) {
-    final snackBar = SnackBar(
-      content: Container(
-        margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            message,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      backgroundColor: Colors.blue,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+class AbaoutPage extends StatelessWidget {
+  const AbaoutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Column(
+
+      children: <Widget>[
+        Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Image(
+              height: MediaQuery.of(context).size.height / 3,
+              fit: BoxFit.cover,
+              image: NetworkImage('https://www.kibrispdr.org/data/212/foto-nisan-kuburan-8.png'),
+              ),
+            Positioned(
+              child: CircleAvatar(
+                radius: 80, 
+                backgroundColor: Color.fromARGB(255, 114, 27, 27), 
+                backgroundImage: NetworkImage('https://cdn.idntimes.com/content-images/post/20221104/download-65049cac42b21fd08b36c35ae6eca9ce_600x400.jpeg') 
+              ,),),
+            ],
+        ),
+        SizedBox(
+          height: 20,
+          ),
+          
+        ListTile(
+          title: Text('NAMA PENGGUNA'),
+          subtitle: Text('Saya merupakan admin aplikasi ini '),
+          ), 
+        IconButton(onPressed: (){}, icon: Icon(Icons.mail), color: Color.fromARGB(255, 61, 61, 61),
+        ),
+        ListTile(
+          title: Text('About Me'),
+          subtitle: Text('Performing hot reload... Reloaded 1 of 908 libraries in 331ms (compile: 24 ms, reload: 164 ms,reassemble: 130 ms).'),
+        )
+        
+      ],
+    );
   }
 }
