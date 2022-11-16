@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fluter_article_app/pages/about_page.dart';
 import 'package:fluter_article_app/pages/add_page.dart';
 import 'package:fluter_article_app/pages/login_page.dart';
+import 'package:fluter_article_app/pages/post.dart';
 import 'package:fluter_article_app/pages/visitor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String key = '';
   int index = 1;
-  final screens = [const MorePage(), const AddPage(), const AboutPage()];
+  final screens = [
+    const MorePage(),
+    const AddPage(),
+    const AboutPage(),
+    const PostPage(),
+  ];
 
   getPref() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -58,6 +64,7 @@ class _HomePageState extends State<HomePage> {
       const Icon(Icons.format_list_bulleted_rounded, size: 30),
       const Icon(Icons.home, size: 30),
       const Icon(Icons.person, size: 30),
+      const Icon(Icons.add, size: 30),
     ];
 
     return Container(
