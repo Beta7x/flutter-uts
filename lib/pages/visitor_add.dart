@@ -72,7 +72,7 @@ class _AddVisitorPageState extends State<AddVisitorPage> {
     };
 
     // Submit data to the server
-    const url = 'http://192.168.43.28:3000/visitors/add';
+    const url = 'https://lrg2ak.deta.dev/visitors/add';
     final uri = Uri.parse(url);
     final response = await http.post(uri,
         body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
