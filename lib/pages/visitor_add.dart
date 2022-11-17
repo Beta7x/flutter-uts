@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fluter_article_app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,30 +27,59 @@ class _AddVisitorPageState extends State<AddVisitorPage> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          TextField(
+          TextFormField(
             controller: nameController,
-            decoration: const InputDecoration(hintText: 'Name'),
+            decoration: InputDecoration(
+              hintText: 'Name',
+              labelText: "Visitor Name",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            keyboardType: TextInputType.text,
           ),
-          TextField(
+          const SizedBox(height: 15),
+          TextFormField(
             controller: phoneController,
-            decoration: const InputDecoration(hintText: "Phone"),
+            decoration: InputDecoration(
+              hintText: "Phone",
+              labelText: "Visitor Phone",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            keyboardType: TextInputType.number,
           ),
-          TextField(
+          const SizedBox(height: 15),
+          TextFormField(
             controller: addressController,
-            decoration: const InputDecoration(hintText: "Address"),
-            keyboardType: TextInputType.multiline,
-            minLines: 3,
-            maxLines: 5,
+            decoration: InputDecoration(
+              hintText: "Address",
+              labelText: "Visitor Address",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            keyboardType: TextInputType.text,
           ),
-          TextField(
+          const SizedBox(height: 15),
+          TextFormField(
             controller: messageController,
-            decoration: const InputDecoration(hintText: 'Message'),
+            decoration: InputDecoration(
+              hintText: 'Message',
+              labelText: "Message",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
             keyboardType: TextInputType.multiline,
             minLines: 5,
             maxLines: 10,
           ),
           const SizedBox(height: 20),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                elevation: 3, minimumSize: const Size(100, 50)),
             onPressed: submitAction,
             child: const Text("Add Visitor"),
           )
@@ -59,6 +89,7 @@ class _AddVisitorPageState extends State<AddVisitorPage> {
   }
 
   Future<void> submitAction() async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
     // GET the data form
     final name = nameController.text;
     final phone = phoneController.text;
@@ -71,21 +102,28 @@ class _AddVisitorPageState extends State<AddVisitorPage> {
       "message": message,
     };
 
-    // Submit data to the server
-    const url = 'https://lrg2ak.deta.dev/visitors/add';
-    final uri = Uri.parse(url);
-    final response = await http.post(uri,
-        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    try {
+      // Submit data to the server
+      const url = 'https://lrg2ak.deta.dev/visitors/add';
+      final uri = Uri.parse(url);
+      final response = await http.post(uri,
+          body: jsonEncode(body),
+          headers: {'Content-Type': 'application/json'});
 
-    // Show success or fail message based on status
-    if (response.statusCode == 201) {
-      nameController.text = '';
-      phoneController.text = '';
-      addressController.text = '';
-      messageController.text = '';
-      showSuccessMessage('Success add Visitor');
-    } else {
-      showErrorMessage('Failed add Visitor');
+      // Show success or fail message based on status
+      if (response.statusCode == 201) {
+        nameController.text = '';
+        phoneController.text = '';
+        addressController.text = '';
+        messageController.text = '';
+        showSuccessMessage('Success add Visitor');
+      } else {
+        showErrorMessage('Failed add Visitor');
+      }
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: false).pop();
+      Dialogs.popUp(context, '$e');
+      debugPrint('$e');
     }
   }
 
