@@ -79,7 +79,12 @@ class _AddVisitorPageState extends State<AddVisitorPage> {
           const SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                elevation: 3, minimumSize: const Size(100, 50)),
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              minimumSize: const Size(100, 50),
+            ),
             onPressed: submitAction,
             child: const Text("Add Visitor"),
           )

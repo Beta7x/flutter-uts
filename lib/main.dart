@@ -1,4 +1,4 @@
-import 'package:fluter_article_app/pages/splash_screen.dart';
+import 'package:fluter_article_app/pages/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());

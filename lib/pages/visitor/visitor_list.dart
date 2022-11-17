@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fluter_article_app/pages/visitor_add.dart';
-import 'package:fluter_article_app/pages/visitor_detail.dart';
+import 'package:fluter_article_app/pages/visitor/visitor_add.dart';
+import 'package:fluter_article_app/pages/visitor/visitor_detail.dart';
 import 'package:fluter_article_app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -154,41 +154,44 @@ class _VisitorPageState extends State<VisitorList> {
         visible: isLoading,
         replacement: RefreshIndicator(
           onRefresh: fetchAllVisitor,
-          child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final item = data[index] as Map;
-              final key = item['key'] as String;
-              return ListTile(
-                leading: const CircleAvatar(child: Icon(Icons.person)),
-                title: Text(item['name']),
-                trailing: PopupMenuButton(
-                  onSelected: (value) {
-                    if (value == 'detail') {
-                      navigateDetailPage(item);
-                    } else if (value == 'delete') {
-                      deleteByKey(key);
-                    }
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 55),
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final item = data[index] as Map;
+                final key = item['key'] as String;
+                return ListTile(
+                  leading: const CircleAvatar(child: Icon(Icons.person)),
+                  title: Text(item['name']),
+                  trailing: PopupMenuButton(
+                    onSelected: (value) {
+                      if (value == 'detail') {
+                        navigateDetailPage(item);
+                      } else if (value == 'delete') {
+                        deleteByKey(key);
+                      }
+                    },
+                    itemBuilder: (context) {
+                      return [
+                        const PopupMenuItem(
+                          value: 'detail',
+                          child: Text("Detail"),
+                        ),
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Text("Delete"),
+                        ),
+                      ];
+                    },
+                  ),
+                  onTap: () {
+                    debugPrint(item['key']);
                   },
-                  itemBuilder: (context) {
-                    return [
-                      const PopupMenuItem(
-                        value: 'detail',
-                        child: Text("Detail"),
-                      ),
-                      const PopupMenuItem(
-                        value: 'delete',
-                        child: Text("Delete"),
-                      ),
-                    ];
-                  },
-                ),
-                onTap: () {
-                  debugPrint(item['key']);
-                },
-                subtitle: Text(item['address']),
-              );
-            },
+                  subtitle: Text(item['address']),
+                );
+              },
+            ),
           ),
         ),
         child: const Center(child: CircularProgressIndicator()),

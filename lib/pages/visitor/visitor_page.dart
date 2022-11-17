@@ -1,4 +1,4 @@
-import 'package:fluter_article_app/pages/visitor_list.dart';
+import 'package:fluter_article_app/pages/visitor/visitor_list.dart';
 import 'package:flutter/material.dart';
 
 class MorePage extends StatelessWidget {

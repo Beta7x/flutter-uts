@@ -1,4 +1,4 @@
-import 'package:fluter_article_app/pages/login_page.dart';
+import 'package:fluter_article_app/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fluter_article_app/utils/size_config.dart';
 import 'package:fluter_article_app/widgets/onboarding_contents.dart';
