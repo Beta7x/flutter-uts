@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:email_validator/email_validator.dart';
-import 'package:fluter_article_app/pages/home_page.dart';
+import 'package:fluter_article_app/widgets/bottom_menu.dart';
 import 'package:fluter_article_app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -206,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => const HomePage(),
+        builder: (BuildContext context) => const BottomMenu(),
       ),
       (route) => false,
     );

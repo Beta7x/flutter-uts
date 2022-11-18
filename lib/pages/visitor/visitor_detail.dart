@@ -16,6 +16,7 @@ class _AddVisitorPageState extends State<DetailVisitorPage> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController messageController = TextEditingController();
+  TextEditingController timeVisitController = TextEditingController();
 
   @override
   void initState() {
@@ -26,10 +27,12 @@ class _AddVisitorPageState extends State<DetailVisitorPage> {
       final phone = visitor['phone'];
       final address = visitor['address'];
       final message = visitor['message'];
+      final timeVisit = visitor['visiting_time'];
       nameController.text = name;
       phoneController.text = phone;
       addressController.text = address;
       messageController.text = message;
+      timeVisitController.text = timeVisit;
     }
   }
 
@@ -74,6 +77,20 @@ class _AddVisitorPageState extends State<DetailVisitorPage> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
+          ),
+          const SizedBox(height: 15),
+          TextFormField(
+            controller: timeVisitController,
+            enabled: false,
+            decoration: InputDecoration(
+              labelText: "Visiting Time",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            keyboardType: TextInputType.multiline,
+            minLines: 2,
+            maxLines: 3,
           ),
           const SizedBox(height: 15),
           TextFormField(

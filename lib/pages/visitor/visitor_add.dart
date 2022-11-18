@@ -48,6 +48,7 @@ class _AddVisitorPageState extends State<AddVisitorPage> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
+            maxLength: 13,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 15),

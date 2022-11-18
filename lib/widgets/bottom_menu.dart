@@ -1,24 +1,24 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fluter_article_app/pages/about/about_page.dart';
-import 'package:fluter_article_app/pages/add_page.dart';
+import 'package:fluter_article_app/pages/home/home_page.dart';
 import 'package:fluter_article_app/pages/login/login_page.dart';
 import 'package:fluter_article_app/pages/visitor/visitor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class BottomMenu extends StatefulWidget {
+  const BottomMenu({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<BottomMenu> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<BottomMenu> {
   String key = '';
   int index = 1;
   final screens = [
     const MorePage(),
-    const AddPage(),
+    const HomePage(),
     const AboutPage(),
   ];
 

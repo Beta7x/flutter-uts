@@ -155,7 +155,7 @@ class _VisitorPageState extends State<VisitorList> {
         replacement: RefreshIndicator(
           onRefresh: fetchAllVisitor,
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 55),
+            padding: const EdgeInsets.only(bottom: 60),
             child: ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, index) {
